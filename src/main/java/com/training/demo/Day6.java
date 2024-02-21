@@ -163,7 +163,35 @@ step 3                                               <- FIN =1, seq =y     LAST_
 
 
 
+        HTTPS:http + ssl/tls = htttps
+        Symmetric algorithm:
+            use the same key for encryption and decryption on server and client side
 
+        Asymmetric algorithm
+            use the public key for encryption and private key for decryption.
+
+        steps of https connection:
+            1:client initiates connection: https://www.google.com -> you as a client to send a request to the server using https
+
+            2:server received your request and sends its certificate
+                    the server will respond by sending ssl/tls certificate to the client.
+                    this certificate includes public key and CA(certificate authority)
+            3:certificate verification on the client side:
+                    the client side will ask: is the certificate signed by a trusted CA?
+                                                is the certificate not expired?
+                                                is the domain name on the certificate matches with the domain name that client asked
+
+            4:Client side will generate a pre-master key
+                pre master key for encrypting the session key (used this session key is used for encryption data)
+
+            5: secure key exchange:
+                    client will send encrypted pre-master key with public key to the server side
+                    the server will decrypt this by using private key
+             6: session key creation
+                    both the client and server use some algorithm with pre-master key to generate the same session keys
+              7: client and server side both ready
+              8: data transfer
+                data is encrypted with session key -> symmetric algorithm
 
 
 
