@@ -2,10 +2,13 @@ package com.training.demo.controllers;
 
 
 import com.training.demo.entities.Calresult;
+import com.training.demo.entities.UserSpringValidation;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 /*
@@ -133,6 +136,14 @@ public class CalculatorController {
         return new ResponseEntity<>(new Calresult(result),HttpStatus.OK);
     }
 
+
+    @PostMapping
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserSpringValidation userSpringValidation, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return new ResponseEntity<>(bindingResult.getAllErrors(),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("User created successfully", HttpStatus.OK);
+    }
 
 
     @GetMapping("/test")
